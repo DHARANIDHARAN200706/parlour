@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="login(event)">
+  <input id="email" placeholder="Email" required />
+  <input id="password" placeholder="Password" type="password" required />
+  <button type="submit">Login</button>
+</form>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwBx8YpvPwDRHtfawkAwMK1Za8EpESgx-OwsLaHklO1IYQ-V9itYnVhZOFPFeCc57Rbfw/exec';
+
+function login(e) {
+  e.preventDefault();
+  const data = {
+    type: 'login',
+    email: document.getElementById('email').value,
+    password: document.getElementById('password').value,
+  };
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(msg => {
+    if (msg === "OK") {
+      localStorage.setItem('email', data.email);
+      alert("Login successful");
+      window.location.href = 'booking.html';
+    } else {
+      alert("Invalid credentials");
+    }
+  });
+}
+</script>
+
+    
+</body>
+</html>
